@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elite Pay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
+        .gold-bg { background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%); }
+        .card { background: #111; border: 1px solid #222; border-radius: 28px; }
+        .banner-wrap { display: flex; animation: slide 15s infinite linear; gap: 12px; }
+        @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .tab-content { display: none; padding-bottom: 100px; }
+        .active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <section id="home" class="tab-content active p-4">
+            <h1 class="text-3xl font-black text-yellow-500 italic mb-8">ELITE PAY</h1>
+            <div class="overflow-hidden rounded-3xl mb-8">
+                <div class="banner-wrap">
+                    <div class="min-w-[85vw] gold-bg p-6 rounded-3xl text-black h-40 flex flex-col justify-between">
+                        <p class="text-2xl font-black italic">₹250 BONUS</p>
+                        <p class="font-bold text-xs bg-black/10 px-3 py-1 rounded-full w-fit">Active for New Users</p>
+                    </div>
+                    <div class="min-w-[85vw] bg-zinc-900 border-2 border-yellow-500 p-6 rounded-3xl h-40 flex flex-col justify-between">
+                        <p class="text-2xl font-black text-yellow-500 italic">+15% REWARD</p>
+                        <p class="text-zinc-500 font-bold text-xs italic">First Order Special</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <a href="https://t.me/Elitepayservice" class="card p-5 text-center active:scale-95 transition-all">
+                    <span class="text-3xl">🎧</span><p class="text-xs font-bold mt-2 uppercase">Support</p>
+                </a>
+                <a href="https://t.me/+f7Yx9ZeczwNhZGE1" class="card p-5 text-center active:scale-95 transition-all">
+                    <span class="text-3xl">📢</span><p class="text-xs font-bold mt-2 uppercase">Group</p>
+                </a>
+            </div>
+            <div class="card p-10 text-center border-yellow-500/10">
+                <p class="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-2">Wallet Balance</p>
+                <p class="text-5xl font-black">₹250.00</p>
+            </div>
+        </section>
+        <section id="orders" class="tab-content p-4">
+            <h2 class="text-2xl font-black mb-6 italic">MARKETPLACE</h2>
+            <div id="orders-grid" class="grid grid-cols-2 gap-4"></div>
+        </section>
+        <section id="profile" class="tab-content p-4 text-center">
+            <div class="w-20 h-20 gold-bg rounded-full mx-auto mb-4 flex items-center justify-center text-black font-black text-2xl">E</div>
+            <p class="text-xl font-bold mb-8 italic">Member Dashboard</p>
+            <div class="space-y-3">
+                <div class="card p-5 flex justify-between items-center text-sm font-bold"><span>Order History</span><span class="text-yellow-500">Pending</span></div>
+                <button onclick="alert('Withdrawals open at ₹300')" class="w-full mt-6 py-5 gold-bg text-black font-black rounded-3xl active:scale-95">WITHDRAW FUNDS</button>
+            </div>
+        </section>
+    </div>
+    <nav class="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-xl border-t border-white/5 flex justify-around p-4">
+        <button onclick="showTab('home')" class="flex flex-col items-center text-yellow-500">🏠<span class="text-[9px] font-bold">HOME</span></button>
+        <button onclick="showTab('orders')" class="flex flex-col items-center text-zinc-500">🛒<span class="text-[9px] font-bold">ORDERS</span></button>
+        <button onclick="showTab('profile')" class="flex flex-col items-center text-zinc-500">👤<span class="text-[9px] font-bold">PROFILE</span></button>
+    </nav>
+    <div id="pay-modal" class="fixed inset-0 bg-black/98 hidden z-[60] p-6 overflow-y-auto">
+        <button onclick="closePay()" class="bg-zinc-900 text-zinc-400 px-6 py-2 rounded-full text-xs font-bold mb-8">✕ BACK</button>
+        <h2 class="text-3xl font-black text-yellow-500 mb-6 italic">PAYMENT</h2>
+        <div class="bg-white p-4 rounded-[35px] mb-8 mx-auto w-fit">
+            <img src="https://i.postimg.cc/CKcwgZ4P/IMG-20260317-110656-677.jpg" class="w-56 h-56 rounded-2xl">
+        </div>
+        <div class="card p-4 mb-8 border-dashed border-yellow-500/40 text-center">
+            <p class="text-[10px] text-zinc-500 font-bold mb-1">UPI ID: <span class="text-white">elitepay@oksbi</span></p>
+        </div>
+        <input type="number" id="utr" placeholder="Enter 12-digit UTR" class="w-full bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-white outline-none focus:border-yellow-500 mb-4">
+        <input type="file" class="w-full text-xs text-zinc-600 mb-8">
+        <button onclick="submitOrder()" class="w-full gold-bg text-black font-black py-5 rounded-3xl">SUBMIT ORDER</button>
+    </div>
+    <script>
+        function showTab(t) {
+            document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+            document.getElementById(t).classList.add('active');
+        }
+        function openPay() { document.getElementById('pay-modal').classList.remove('hidden'); }
+        function closePay() { document.getElementById('pay-modal').classList.add('hidden'); }
+        function submitOrder() {
+            if(document.getElementById('utr').value.length < 12) return alert("12-digit UTR Required");
+            alert("Payment Submitted!"); closePay();
+        }
+        const grid = document.getElementById('orders-grid');
+        for (let i = 0; i < 30; i++) {
+            let v = 300 + (i * 162); if(v > 5000) v = 5000;
+            grid.innerHTML += `<div class="card p-5 flex flex-col items-center">
+                <p class="text-2xl font-black mb-1 italic">₹${v}</p>
+                <div class="text-center mb-5 text-[9px]">
+                    <p class="text-green-400 font-bold uppercase">+₹${(v*0.045).toFixed(2)} Profit</p>
+                    <p class="text-yellow-500 font-black italic">+₹${(v*0.15).toFixed(2)} Bonus</p>
+                </div>
+                <button onclick="openPay()" class="w-full gold-bg text-black text-[10px] font-black py-2.5 rounded-full">BUY NOW</button>
+            </div>`;
+        }
+    </script>
+</body>
+  </html>
+          
